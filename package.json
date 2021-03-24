@@ -1,0 +1,8 @@
+{
+  "name": "pet-server",
+  "version": "1.0.0",
+  "description": "Backend para la web de mascotas",
+  "main": "index.js",
+  "author": "Gabriel Ballester Morant",
+  "license": "MIT"
+}
