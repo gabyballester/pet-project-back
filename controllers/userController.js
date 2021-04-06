@@ -27,9 +27,9 @@ function signUp(req, res) {
     
     //  guardado en mongo
     user.save((err, userStored) => {
-      if (err) return res.status(500).send({ message: "El usuario ya existe." });
+      if (err) return res.status(500).send({ message: "¡¡Correo ya registrado!!" });
       if (!userStored) return res.status(404).send({ message: "Error al crear el usuario." });
-      return res.status(200).send({ user: userStored });
+      return res.status(200).send({ user: userStored, message: 'Usuario creado' });
     })
 
   })
