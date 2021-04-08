@@ -2,33 +2,29 @@ const bcrypt = require("bcrypt-nodejs");
 const User = require("../models/userModel");
 
 function signUp(req, res) {
-
-
-
   const { email, password, repeatPassword } = req.body;
 
-
   // comprobación de campos
-  if (!email || !password || !repeatPassword || password !== repeatPassword ) {
+  if (!email || !password || !repeatPassword || password !== repeatPassword) {
     return res.status(404).send({ message: "Error de formulario" });
   }
 
   // encriptación de contraseña
   bcrypt.hash(password, null, null, function (err, hash) {
     if (err) return res.status(500).send({ message: "Error al encriptar la contraseña." });
-    
+
     // objeto usuario de instancia de usuario para guardar
     const user = new User({
-      email,
+      email: email.toLowerCase(),
       password: hash,
       role: "admin",
       active: false
     });
-    
+
     //  guardado en mongo
     user.save((err, userStored) => {
-      if (err) return res.status(500).send({ message: "¡¡Correo ya registrado!!" });
-      if (!userStored) return res.status(404).send({ message: "Error al crear el usuario." });
+      if (err) return res.status(500).send({ message: "Correo ya en uso" });
+      if (!userStored) return res.status(404).send({ message: "Error al crear usuario" });
       return res.status(200).send({ user: userStored, message: 'Usuario creado' });
     })
 
